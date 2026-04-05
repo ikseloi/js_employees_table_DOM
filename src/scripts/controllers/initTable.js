@@ -1,4 +1,4 @@
-import * as render from '../view/tableRender.js';
+import * as render from '../view/renderTable.js';
 import * as handlers from './eventsTable.js';
 import { tableState } from '../models/TableStore.js';
 import { extractTableData } from '../utils/extractTableData.js';
@@ -10,7 +10,15 @@ export const init = () => {
   const thead = document.querySelector('thead');
   const tbody = document.querySelector('tbody');
 
-  const employeeStore = createEmployeeStore(extractTableData(tbody.rows));
+  const orderFields = Array.from(thead.querySelectorAll('th')).map(
+    (th) => th.textContent[0].toLowerCase() + th.textContent.slice(1),
+  );
+
+  render.initTheadAttributes(thead, orderFields);
+
+  const employeeStore = createEmployeeStore(
+    extractTableData(tbody.rows, orderFields),
+  );
   const { add, update, getAllSorted } = employeeStore;
   const employeeForm = createEmployeeForm(add);
 
@@ -20,10 +28,10 @@ export const init = () => {
         render.updateRow(payload, tbody);
         break;
       case ACTION_TYPES.ADD:
-        render.addRow(payload, tbody);
+        render.addRow(payload, orderFields, tbody);
         break;
       case ACTION_TYPES.SORT:
-        render.renderRows(tbody, payload);
+        render.renderRows(tbody, payload, orderFields);
         break;
     }
   });
@@ -35,9 +43,8 @@ export const init = () => {
     render,
   };
 
-  document.body.appendChild(employeeForm);
-  render.initTheadAttributes(thead);
-  render.initCellAttributes(tbody, tbody.rows);
+  render.initCellAttributes(tbody, tbody.rows, orderFields);
 
+  document.body.appendChild(employeeForm);
   handlers.init(ctx);
 };

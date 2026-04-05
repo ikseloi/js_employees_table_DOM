@@ -23,12 +23,6 @@ export const validateEmployeeData = (formData) => {
 };
 
 export const validateEmployeeFiled = ({ field, finalValue }) => {
-  // const errors = RULES[field].map((rule) => {
-  //   return rule(finalValue);
-  // });
-
-  // console.log(errors);
-
   const errors = RULES[field].reduce((acc, rule, idx) => {
     const error = rule(finalValue);
 
@@ -38,9 +32,6 @@ export const validateEmployeeFiled = ({ field, finalValue }) => {
 
     return { ...acc };
   }, {});
-
-  // console.log(errors);
-  // console.log(finalValue);
 
   const valid = Object.keys(errors).length === 0;
 

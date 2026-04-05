@@ -1,22 +1,13 @@
-// import { columns as SCHEMA } from '../models/employeesStore';
-import { KEYS, LABELS, ORDER_FIELDS } from '../constants';
+import { KEYS } from '../constants';
 
-const SCHEMA = [
-  { field: KEYS.NAME, label: LABELS.NAME },
-  { field: KEYS.POSITION, label: LABELS.POSITION },
-  { field: KEYS.OFFICE, label: LABELS.OFFICE },
-  { field: KEYS.AGE, label: LABELS.AGE },
-  { field: KEYS.SALARY, label: LABELS.SALARY },
-];
-
-export const initTheadAttributes = (theadElement) => {
+export const initTheadAttributes = (theadElement, orderFields) => {
   const tr = document.createElement('tr');
 
-  SCHEMA.forEach((column) => {
+  orderFields.forEach((column) => {
     const th = document.createElement('th');
 
-    th.textContent = column.label;
-    th.dataset.field = column.field;
+    th.textContent = column[0].toUpperCase() + column.slice(1);
+    th.dataset.field = column;
     th.tabIndex = 0;
     th.setAttribute('role', 'button');
     tr.appendChild(th);
@@ -26,7 +17,7 @@ export const initTheadAttributes = (theadElement) => {
   theadElement.appendChild(tr);
 };
 
-export const initCellAttributes = (tbody, rows) => {
+export const initCellAttributes = (tbody, rows, orderFields) => {
   const frag = document.createDocumentFragment();
 
   [...rows].forEach((row, index) => {
@@ -38,7 +29,7 @@ export const initCellAttributes = (tbody, rows) => {
       const elementTd = document.createElement('td');
 
       elementTd.textContent = td.textContent;
-      elementTd.dataset.field = SCHEMA[idx].field;
+      elementTd.dataset.field = orderFields[idx];
       tr.appendChild(elementTd);
     });
     frag.appendChild(tr);
@@ -47,11 +38,11 @@ export const initCellAttributes = (tbody, rows) => {
   tbody.appendChild(frag);
 };
 
-export const renderRows = (tbody, employeesArr = []) => {
+export const renderRows = (tbody, employeesArr = [], orderFields) => {
   const frag = document.createDocumentFragment();
 
   employeesArr.forEach((employeeObj) => {
-    const tr = addRow(employeeObj);
+    const tr = addRow(employeeObj, orderFields);
 
     tr.dataset.id = employeeObj.id;
     frag.appendChild(tr);
@@ -61,10 +52,10 @@ export const renderRows = (tbody, employeesArr = []) => {
   tbody.appendChild(frag);
 };
 
-export const addRow = (payload, tbody = null) => {
+export const addRow = (payload, orderFields, tbody = null) => {
   const tr = document.createElement('tr');
 
-  ORDER_FIELDS.forEach((field) => {
+  orderFields.forEach((field) => {
     const td = document.createElement('td');
 
     if (field === KEYS.SALARY) {

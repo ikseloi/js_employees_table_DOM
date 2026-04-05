@@ -132,6 +132,7 @@ export const createEmployeeForm = (addEmployee) => {
   button.type = 'submit';
 
   button.addEventListener('click', function (e) {
+    // // html validation
     // if (!form.checkValidity()) {
     //   form.reportValidity();
 
