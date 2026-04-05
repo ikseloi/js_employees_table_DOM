@@ -13,7 +13,7 @@ export const VALIDATION_RULES = {
 };
 
 export const NOTIFICATION_TYPES = {
-  SUCSESS: 'success',
+  SUCCESS: 'success',
   ERROR: 'error',
   WARNING: 'warning',
 };
@@ -31,7 +31,7 @@ export const KEYS = {
   OFFICE: 'office',
   AGE: 'age',
   SALARY: 'salary',
-  ID: 'salary',
+  ID: 'id',
 };
 
 export const ORDER_FIELDS = [

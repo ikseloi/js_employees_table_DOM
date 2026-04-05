@@ -41,8 +41,8 @@ const commitCellEdit = (tableStore, updateEmployee) => {
 
   if (valid) {
     showNotification(
-      NOTIFICATION_TYPES.SUCSESS,
-      'Validation ' + NOTIFICATION_TYPES.SUCSESS,
+      NOTIFICATION_TYPES.SUCCESS,
+      'Validation ' + NOTIFICATION_TYPES.SUCCESS,
       'Employee field ' + field + ' updated',
     );
   }

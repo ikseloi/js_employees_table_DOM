@@ -5,6 +5,7 @@ import {
   OFFICES,
   VALIDATION_RULES,
   NOTIFICATION_TYPES,
+  ORDER_FIELDS,
 } from '../../constants';
 
 import { validateEmployeeData } from '../../services/validator';
@@ -32,7 +33,7 @@ const normalizeFormData = (cleanedData) => {
 const onSubmitForm = (e, addEmployee) => {
   e.preventDefault();
 
-  const FORM_DATA = Object.values(KEYS).reduce((acc, k) => {
+  const FORM_DATA = ORDER_FIELDS.reduce((acc, k) => {
     acc[k] = document.querySelector(`[name="${k}"]`).value.trim();
 
     return acc;
@@ -52,8 +53,8 @@ const onSubmitForm = (e, addEmployee) => {
 
   if (valid) {
     showNotification(
-      NOTIFICATION_TYPES.SUCSESS,
-      'Validation ' + NOTIFICATION_TYPES.SUCSESS,
+      NOTIFICATION_TYPES.SUCCESS,
+      'Validation ' + NOTIFICATION_TYPES.SUCCESS,
       'New employee saved',
     );
 

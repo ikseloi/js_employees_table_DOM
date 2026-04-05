@@ -69,10 +69,11 @@ export const addRow = (payload, tbody = null) => {
 
     if (field === KEYS.SALARY) {
       td.textContent = '$' + payload[field].toLocaleString('en-US');
+    } else {
+      td.textContent = payload[field];
     }
 
     td.dataset.field = field;
-    td.textContent = td.textContent ? td.textContent : payload[field];
     tr.appendChild(td);
   });
 

@@ -1,4 +1,4 @@
-import { ACTION_TYPES, ASCENDING, NUMERIC_VALUES, KEYS } from '../constants';
+import { ACTION_TYPES, ASCENDING, NUMERIC_VALUES } from '../constants';
 import { compareValues } from '../utils/sort';
 import { normalizeNumberString } from '../utils/formatter';
 
@@ -116,70 +116,4 @@ export const createEmployeeStore = (initial = []) => {
     subscribe: (fn) => StoreProto.subscribe(acces, fn),
     unsubscribe: (fn) => StoreProto.unsubscribe(acces, fn),
   };
-};
-
-const SCHEMA = [
-  { v: KEYS.NAME },
-  { v: KEYS.POSITION },
-  { v: KEYS.OFFICE },
-  { v: KEYS.AGE },
-  { v: KEYS.SALARY },
-];
-
-// ------------
-const state = {
-  employees: [],
-};
-
-export const extractTableData = (rows) => {
-  return Array.from(rows).map((tr) => {
-    const obj = Array.from(tr.children).reduce((acc, td, idx) => {
-      const key = SCHEMA[idx].v;
-      const value = td.textContent.trim();
-
-      if (NUMERIC_VALUES.includes(key)) {
-        const n = Number(value);
-
-        acc[key] = Number.isFinite(n) ? n : value;
-        // зберегти число або залишити як строку для валідації
-      } else {
-        acc[key] = value;
-      }
-
-      return acc;
-    }, {});
-
-    return obj;
-  });
-};
-
-export const getAll = () => state.employees.slice();
-
-export const setEmployees = (arr) => {
-  state.employees = Array.isArray(arr) ? arr.slice() : [];
-};
-
-export const addEmployee = (employee) => {
-  state.employees.push(employee);
-};
-
-export const updateEmployee = (id, key, newValue) => {
-  const emp = state.employees.find((e) => e.id === id);
-
-  if (emp) {
-    emp[key] = newValue;
-  }
-};
-
-export const sortRows = (employees, field, direction) => {
-  const isNumeric = NUMERIC_VALUES.includes(field);
-  const sorted = [...employees].sort((r1, r2) => {
-    const v1 = r1[field];
-    const v2 = r2[field];
-    const cmp = compareValues(v1, v2, isNumeric);
-
-    return direction === ASCENDING ? cmp : -cmp;
-  });
-
-  return sorted;
 };

@@ -21,15 +21,15 @@ export const normalizeNumberString = (v) => {
   s = hasDot ? s.split('.').filter(Boolean).join('.') : s;
 
   if (hasComma && hasDot) {
-    // правіший — десятковий
+    // last character is a fractional  separator
     const lastComma = s.lastIndexOf(',');
     const lastDot = s.lastIndexOf('.');
 
     if (lastComma > lastDot) {
-      // кома — десяткова
+      // fractional comma
       s = s.replace(/\./g, '').replace(/,/g, '.');
     } else {
-      // крапка — десяткова
+      // fractional point
       s = s.replace(/,/g, '');
     }
 
@@ -56,10 +56,10 @@ export const normalizeNumberString = (v) => {
       const last = parts.pop();
 
       if (last.length === 3) {
-        // усі точки — тисячні
+        // all points are thousands
         s = parts.join('') + last;
       } else {
-        // остання — дробова
+        // the last one is fractional
         s = parts.join('') + '.' + last;
       }
     }

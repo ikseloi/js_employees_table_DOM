@@ -32,9 +32,13 @@ const handleTbodyClick = (e, tableState, elements) => {
     return;
   }
 
-  elements.tbody
-    .querySelector(`tr[data-id="${tableState.getSelectedRowId()}"]`)
-    .classList.remove('active');
+  const prev = elements.tbody.querySelector(
+    `tr[data-id="${tableState.getSelectedRowId()}"]`,
+  );
+
+  if (prev) {
+    prev.classList.remove('active');
+  }
 
   tr.classList.add('active');
   tableState.setSelectedRowId(tr.dataset.id);

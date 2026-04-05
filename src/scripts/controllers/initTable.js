@@ -1,4 +1,3 @@
-import * as data from '../models/employeesStore.js';
 import * as render from '../view/tableRender.js';
 import * as handlers from './eventsTable.js';
 import { tableState } from '../models/TableStore.js';
@@ -40,6 +39,5 @@ export const init = () => {
   render.initTheadAttributes(thead);
   render.initCellAttributes(tbody, tbody.rows);
 
-  data.setEmployees(data.extractTableData(tbody.rows));
   handlers.init(ctx);
 };
