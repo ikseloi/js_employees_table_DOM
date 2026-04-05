@@ -97,7 +97,6 @@ export const createEmployeeForm = (addEmployee) => {
       });
 
       label.appendChild(select);
-      form.appendChild(label);
 
       return;
     }

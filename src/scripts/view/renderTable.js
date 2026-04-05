@@ -82,6 +82,8 @@ export const updateRow = (payload, tbody) => {
 
   if (td) {
     td.textContent =
-      payload.field === KEYS.SALARY ? '$' + payload.value : payload.value;
+      payload.field === KEYS.SALARY
+        ? '$' + payload.value.toLocaleString('en-US')
+        : payload.value;
   }
 };
